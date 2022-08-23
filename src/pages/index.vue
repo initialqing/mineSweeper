@@ -1,0 +1,34 @@
+<script setup lang="ts">
+
+
+import { isDev,toggleDev } from "~/composables";
+import { GamePlay } from "~/composables/logic";
+
+const play = new GamePlay(10,10)
+const state = computed(() => play.board)
+useStorage('vueSweeper',play.state)
+</script>
+
+<template>
+  <div>
+    MineSweeper
+    <div p6>
+      <div v-for="row, y in state" :key="y" flex="~ gap-1" items-center justify-center>
+         <MineBlock
+            v-for="block, x in row"  :key="x"
+            :block="block" 
+            @click="play.onClick(block)"
+            @contextmenu.prevent="play.onRightClick(block)"
+         />
+      </div>
+      <div flex="~ gap-5" justify-center m-7>
+        <button @click="toggleDev()" btn>
+          {{isDev ? 'Dev' : 'NORMAL'}}
+        </button>
+        <button @click="play.reset()" btn>
+          RESET
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
