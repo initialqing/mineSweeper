@@ -3,7 +3,7 @@
           w-8 h-8 m="0.5" border="2 gray-400/50 " hover="" 
           items-center justify-center  
           :class="getBlockClass(block)" 
-          flex="~" >
+          flex="~">
           <template v-if="block.flagged">
             <div i-mdi-flag text-red/>
           </template>
@@ -36,7 +36,7 @@ function getBlockClass(block: BlockState) {
     return 'bg-gray-500/10'
   }
   if(!block.revealed) {
-    return 'bg-gray-500/10 hover:bg-orange-9/50'
+    return 'bg-blue/50 hover:bg-orange-9/50'
   }
   return block.mine ? 'bg-red-500/50' : numberColors[block.adjacentMines]
 }
