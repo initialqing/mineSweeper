@@ -18,8 +18,8 @@ watchEffect(() => {
 <template>
   <div>
     MineSweeper
-    <div p6>
-      <div v-for="row, y in state" :key="y" flex="~ gap-1" items-center justify-center>
+    <div p6 w-auto scroll-auto overflow-auto>
+      <div v-for="row, y in state" :key="y" flex="~ gap-1" items-center justify-center w-max ma>
         <MineBlock v-for="block, x in row" :key="x" :block="block" @click="play.onClick(block)"
           @contextmenu.prevent="play.onRightClick(block)" />
       </div>

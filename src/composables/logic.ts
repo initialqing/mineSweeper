@@ -65,6 +65,9 @@ export class GamePlay {
         if (this.state.value.gameState !== 'play') {
             return
         }
+        if (block.flagged) {
+            return
+        }
         if (!this.state.value.mineGenerated) {
             this.generateMines(this.state.value.board, block)
             this.state.value.mineGenerated = true
@@ -148,7 +151,7 @@ export class GamePlay {
         Array.from({ length: this.mines }, () => null).forEach(() => {
             let placed = false
             while (!placed) {
-              placed = placeRandom()
+                placed = placeRandom()
             }
         })
         // for (const row of state) {

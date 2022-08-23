@@ -1,6 +1,6 @@
 <template>
      <button  
-          w-8 h-8 m="0.5" border="2 gray-400/50 " hover="" 
+          min-w-8 min-h-8 m="0.5" border="2 gray-400/50 " hover="" 
           items-center justify-center  
           :class="getBlockClass(block)" 
           flex="~">
