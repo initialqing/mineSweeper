@@ -16,7 +16,7 @@ function congrats() {
     ],
     shapes: ['square'],
     ticks: 500,
-  } as confetti.Options
+  } as confetti.Options;
   confetti({
     ...defaults,
     particleCount: 80,
