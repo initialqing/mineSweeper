@@ -16,6 +16,7 @@ export default defineConfig({
   },
   plugins: [
     Vue({
+      // $ref
       reactivityTransform: true,
     }),
 
@@ -26,6 +27,7 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
+        // 不加下面这一行需要加入  /// <reference types="vue/macros-global" />
         'vue/macros',
         'vue-router',
         '@vueuse/core',
