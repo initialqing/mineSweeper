@@ -6,7 +6,7 @@ import { GamePlay } from "~/composables/logic";
 const mineConnt = computed(() => {
   return play.blocks.reduce((a, b) => a + (b.mine ? 1 : 0), 0)
 })
-const play = new GamePlay(10, 10, 10)
+const play = new GamePlay(10, 10, 3)
 const state = computed(() => play.board)
 useStorage('vueSweeper', play.state)
 
@@ -35,5 +35,7 @@ watchEffect(() => {
         </button>
       </div>
     </div>
+
+    <Confetti :passed="play.state.value.gameState === 'won'" />
   </div>
 </template>

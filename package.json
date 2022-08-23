@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.0.0",
+    "canvas-confetti": "^1.5.1",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },
@@ -19,6 +20,7 @@
     "@antfu/eslint-config": "^0.25.2",
     "@iconify-json/carbon": "^1.1.7",
     "@iconify-json/mdi": "^1.1.30",
+    "@types/canvas-confetti": "^1.4.3",
     "@types/node": "^18.6.1",
     "@unocss/reset": "^0.44.7",
     "@vitejs/plugin-vue": "^3.0.1",
