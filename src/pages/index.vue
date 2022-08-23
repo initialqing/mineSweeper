@@ -77,7 +77,7 @@ watchEffect(() => {
     <div p6 w-auto scroll-auto overflow-auto>
       <div v-for="row, y in state" :key="y" flex="~ gap-1" items-center justify-center w-max ma>
         <MineBlock v-for="block, x in row" :key="x" :block="block" @click="play.onClick(block)"
-          @contextmenu.prevent="play.onRightClick(block)" @dblclick="play.autoExpand(block)"/>
+          @contextmenu.prevent="play.onRightClick(block)" @dblclick="play.autoExpand(block)" />
       </div>
 
       <div flex="~ gap-5" justify-center m-7>
@@ -87,6 +87,6 @@ watchEffect(() => {
       </div>
     </div>
 
-    <Confetti :passed="play.state.value.gameState === 'won'" />
+    <Confetti :passed="play.state.value.status === 'won'" />
   </div>
 </template>

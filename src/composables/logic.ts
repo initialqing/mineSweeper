@@ -10,11 +10,13 @@ const directions = [
     [-1, 1],
     [0, 1],
 ]
+type GameStatus = 'play' | 'won' | 'lost'
 interface GameState {
     board: BlockState[][],
     mineGenerated: boolean,
-    gameState: 'play' | 'won' | 'lost',
-    startMs: number
+    status: GameStatus,
+    startMs: number,
+    endMs?: number
 }
 export class GamePlay {
     state = ref() as Ref<GameState>
@@ -42,7 +44,7 @@ export class GamePlay {
         this.state.value = {
             startMs: +Date.now(),
             mineGenerated: false,
-            gameState: 'play',
+            status: 'play',
             board: Array.from(
                 {
                     length: this.height
@@ -58,7 +60,7 @@ export class GamePlay {
     }
 
     onRightClick(block: BlockState) {
-        if (this.state.value.gameState !== 'play') {
+        if (this.state.value.status !== 'play') {
             return
         }
         if (block.revealed) {
@@ -71,7 +73,7 @@ export class GamePlay {
     }
 
     onClick(block: BlockState) {
-        if (this.state.value.gameState !== 'play') {
+        if (this.state.value.status !== 'play') {
             return
         }
         if (block.flagged) {
@@ -83,7 +85,7 @@ export class GamePlay {
         }
         block.revealed = true
         if (block.mine) {
-            this.state.value.gameState = 'lost'
+            this.state.value.status = 'lost'
             this.showAllMines()
             return
         }
@@ -184,10 +186,10 @@ export class GamePlay {
         const blocks = this.board.flat()
         if (blocks.every(block => block.revealed || block.flagged || block.mine)) {
             if (blocks.some(block => block.flagged && !block.mine)) {
-                this.state.value.gameState = 'lost'
+                this.state.value.status = 'lost'
                 this.showAllMines()
             } else {
-                this.state.value.gameState = 'won'
+                this.state.value.status = 'won'
             }
         }
     }
@@ -196,12 +198,16 @@ export class GamePlay {
         const sliblings = this.getSilblings(block)
         const flages = this.getSilblings(block).reduce((a, b) => a + (b.flagged ? 1 : 0), 0)
         const notRevealed = this.getSilblings(block).reduce((a, b) => a + ((!b.revealed && !b.flagged) ? 1 : 0), 0)
+
         if (flages === block.adjacentMines) {
             sliblings.forEach(i => { i.revealed = true })
         }
+
         const missingFlages = block.adjacentMines - flages;
 
         console.log(notRevealed, missingFlages)
+        
+        // 没有揭开的block和缺失的🚩一样多的时候就插上🚩
         if (notRevealed === missingFlages) {
             sliblings.forEach((a) => {
                 if (!a.revealed && !a.flagged) {
@@ -210,5 +216,9 @@ export class GamePlay {
             })
         }
 
+    }
+    gameOver(status: GameState) {
+        this.state.value.status = "lost"
+        this.state.value.endMs = + Date.now()
     }
 }
