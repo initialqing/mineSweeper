@@ -1,6 +1,6 @@
 <template>
      <button  
-          min-w-8 min-h-8 m="0.5" border="2 gray-400/50 " hover="" 
+          min-w-8 min-h-8 m="0.2" border="2 gray-400/50 " hover="" 
           items-center justify-center  
           :class="getBlockClass(block)" 
           flex="~">
@@ -8,10 +8,10 @@
             <div i-mdi-flag text-red/>
           </template>
           <template v-else-if="block.revealed || isDev">
-            <div v-if="block.mine" i-mdi-mine/>
+            <div v-if="block.mine" i-mdi-mine></div>
             <div v-else font-700>{{  block.adjacentMines }}</div>
           </template>
-        </button>
+      </button>
 </template>
 
 <script setup lang="ts">

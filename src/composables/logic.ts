@@ -13,7 +13,8 @@ const directions = [
 interface GameState {
     board: BlockState[][],
     mineGenerated: boolean,
-    gameState: 'play' | 'won' | 'lost'
+    gameState: 'play' | 'won' | 'lost',
+    startMs:number
 }
 export class GamePlay {
     state = ref() as Ref<GameState>
@@ -39,6 +40,7 @@ export class GamePlay {
         this.height = height
         this.mines = mines
         this.state.value = {
+            startMs: +Date.now(),
             mineGenerated: false,
             gameState: 'play',
             board: Array.from(
@@ -60,6 +62,9 @@ export class GamePlay {
             return
         }
         if (block.revealed) {
+            return
+        }
+        if(!this.state.value.mineGenerated) {
             return
         }
         block.flagged = !block.flagged
@@ -140,12 +145,12 @@ export class GamePlay {
             const x = this.randomInt(0, this.width - 1);
             const y = this.randomInt(0, this.height - 1);
             const block = state[y][x]
-            if (Math.abs(initial.x - block.x) <= 1) {
+            if (Math.abs(initial.x - block.x) <= 1 && Math.abs(initial.y - block.y) <= 1) {
                 return false
             }
-            if (Math.abs(initial.y - block.y) <= 1) {
-                return false
-            }
+            // if (Math.abs(initial.y - block.y) <= 1) {
+            //     return false
+            // }
             if (block.mine) {
                 return false
             }
