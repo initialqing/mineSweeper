@@ -4,9 +4,13 @@
 import { isDev,toggleDev } from "~/composables";
 import { GamePlay } from "~/composables/logic";
 
-const play = new GamePlay(10,10)
+const play = new GamePlay(5,5)
 const state = computed(() => play.board)
 useStorage('vueSweeper',play.state)
+
+watchEffect(() => {
+  play.checkState()  
+})
 </script>
 
 <template>
