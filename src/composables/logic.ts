@@ -85,8 +85,7 @@ export class GamePlay {
         }
         block.revealed = true
         if (block.mine) {
-            this.state.value.status = 'lost'
-            this.showAllMines()
+            this.OngameOver('lost')
             return
         }
         this.expendZero(block)
@@ -186,10 +185,9 @@ export class GamePlay {
         const blocks = this.board.flat()
         if (blocks.every(block => block.revealed || block.flagged || block.mine)) {
             if (blocks.some(block => block.flagged && !block.mine)) {
-                this.state.value.status = 'lost'
-                this.showAllMines()
+                this.OngameOver('lost')
             } else {
-                this.state.value.status = 'won'
+                this.OngameOver('won')
             }
         }
     }
@@ -200,13 +198,18 @@ export class GamePlay {
         const notRevealed = this.getSilblings(block).reduce((a, b) => a + ((!b.revealed && !b.flagged) ? 1 : 0), 0)
 
         if (flages === block.adjacentMines) {
-            sliblings.forEach(i => { i.revealed = true })
+            sliblings.forEach(i => {
+                i.revealed = true 
+                if(i.mine) {
+                    this.OngameOver('lost')
+                }
+            })
         }
 
         const missingFlages = block.adjacentMines - flages;
 
         console.log(notRevealed, missingFlages)
-        
+
         // 没有揭开的block和缺失的🚩一样多的时候就插上🚩
         if (notRevealed === missingFlages) {
             sliblings.forEach((a) => {
@@ -217,8 +220,11 @@ export class GamePlay {
         }
 
     }
-    gameOver(status: GameState) {
-        this.state.value.status = "lost"
-        this.state.value.endMs = + Date.now()
+    OngameOver(status: GameStatus) {
+        this.state.value.status = status
+        this.state.value.endMs = +Date.now()
+        if (status === 'lost') {
+            this.showAllMines()
+        }
     }
 }

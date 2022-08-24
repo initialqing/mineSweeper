@@ -34,7 +34,7 @@ useStorage('vueSweeper', play.state)
 
 // 设计计时器
 const now = $(useNow())
-const timerMs = $computed(() => Math.round((+now - play.state.value.startMs) / 1000))
+const timerMs = $computed(() => Math.round((+(play.state.value.endMs || now) - play.state.value.startMs) / 1000))
 
 
 // 更新状态
