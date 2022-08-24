@@ -199,8 +199,8 @@ export class GamePlay {
 
         if (flages === block.adjacentMines) {
             sliblings.forEach(i => {
-                i.revealed = true 
-                if(i.mine) {
+                i.revealed = true
+                if (i.mine) {
                     this.OngameOver('lost')
                 }
             })
@@ -225,6 +225,9 @@ export class GamePlay {
         this.state.value.endMs = +Date.now()
         if (status === 'lost') {
             this.showAllMines()
+            setTimeout(() => {
+                alert('lost')
+            }, 20);
         }
     }
 }
