@@ -28,7 +28,7 @@ function newGame(difficult: 'easy' | 'medium' | 'hard') {
       break;
   }
 }
-const play = new GamePlay(9, 9, 10)
+const play = new GamePlay(4, 4, 1)
 const state = computed(() => play.board)
 useStorage('vueSweeper', play.state)
 

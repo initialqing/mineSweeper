@@ -141,6 +141,7 @@ export class GamePlay {
     randomInt(min: number, max: number) {
         return Math.round(this.random(min, max))
     }
+
     generateMines(state: BlockState[][], initial: BlockState) {
         const placeRandom = () => {
             const x = this.randomInt(0, this.width - 1);
@@ -196,11 +197,11 @@ export class GamePlay {
         const sliblings = this.getSilblings(block)
         const flages = this.getSilblings(block).reduce((a, b) => a + (b.flagged ? 1 : 0), 0)
         const notRevealed = this.getSilblings(block).reduce((a, b) => a + ((!b.revealed && !b.flagged) ? 1 : 0), 0)
-
+        console.log(sliblings)
         if (flages === block.adjacentMines) {
             sliblings.forEach(i => {
                 i.revealed = true
-                if (i.mine) {
+                if (i.mine && !i.flagged) {
                     this.OngameOver('lost')
                 }
             })
@@ -208,7 +209,6 @@ export class GamePlay {
 
         const missingFlages = block.adjacentMines - flages;
 
-        console.log(notRevealed, missingFlages)
 
         // 没有揭开的block和缺失的🚩一样多的时候就插上🚩
         if (notRevealed === missingFlages) {
